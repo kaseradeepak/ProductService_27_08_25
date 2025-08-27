@@ -1,0 +1,81 @@
+package dev.umang.productservice_27_08.dtos;
+
+import dev.umang.productservice_27_08.models.Category;
+import dev.umang.productservice_27_08.models.Product;
+import lombok.Getter;
+import lombok.Setter;
+
+//@Getter
+//@Setter
+public class FakeStoreProductDTO {
+    private int id;
+    private String title;
+    private String description;
+    private double price;
+    private String category;
+    private String image;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public Product toProduct(){
+        Product product = new Product();
+        product.setId(String.valueOf(this.id));
+        product.setTitle(this.title);
+        product.setDescription(this.description);
+        product.setPrice(this.price);
+        product.setImage(this.image);
+
+        Category category1 = new Category();
+        category1.setName(this.category);
+
+        product.setCategory(category1);
+
+        return product;
+    }
+}
