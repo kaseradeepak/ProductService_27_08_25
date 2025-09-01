@@ -1,26 +1,21 @@
 package dev.umang.productservice_27_08.models;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
 import lombok.*;
 
 //@Getter
 //@Setter
 //@AllArgsConstructor
 //@NoArgsConstructor
-public class Product {
-    private String id;
+@Entity
+public class Product extends BaseModel{
     private String title;
     private String description;
     private double price;
+    @ManyToOne
     private Category category;
     private String image;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getTitle() {
         return title;

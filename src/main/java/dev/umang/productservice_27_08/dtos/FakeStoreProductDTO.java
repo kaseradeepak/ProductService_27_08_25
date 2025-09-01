@@ -8,18 +8,18 @@ import lombok.Setter;
 //@Getter
 //@Setter
 public class FakeStoreProductDTO {
-    private int id;
+    private Long id;
     private String title;
     private String description;
     private double price;
     private String category;
     private String image;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -65,7 +65,7 @@ public class FakeStoreProductDTO {
 
     public Product toProduct(){
         Product product = new Product();
-        product.setId(String.valueOf(this.id));
+        product.setId(this.id);
         product.setTitle(this.title);
         product.setDescription(this.description);
         product.setPrice(this.price);

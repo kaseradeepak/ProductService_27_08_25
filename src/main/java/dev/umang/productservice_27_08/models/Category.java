@@ -1,21 +1,14 @@
 package dev.umang.productservice_27_08.models;
 
+import jakarta.persistence.Entity;
 import lombok.Getter;
 import lombok.Setter;
 
 //@Getter
 //@Setter
-public class Category {
-    private String id;
+@Entity
+public class Category extends BaseModel{
     private String name;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;

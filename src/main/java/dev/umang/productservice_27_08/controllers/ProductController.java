@@ -6,6 +6,7 @@ import dev.umang.productservice_27_08.exceptions.ProductNotFoundException;
 import dev.umang.productservice_27_08.models.Product;
 import dev.umang.productservice_27_08.services.FakestoreProductService;
 import dev.umang.productservice_27_08.services.ProductService;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,7 @@ import java.util.List;
 public class ProductController {
     private ProductService productService;
 
-    public ProductController(ProductService productService){
+    public ProductController(@Qualifier("selfproductservice") ProductService productService){
         this.productService = productService;
     }
     //this is the class which is the entry point of requests

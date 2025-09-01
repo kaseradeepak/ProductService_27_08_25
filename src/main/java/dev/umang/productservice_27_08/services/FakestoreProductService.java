@@ -10,7 +10,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
+@Service("fakestoreprodservice")
 public class FakestoreProductService implements ProductService {
     /*
     To call external APIs, we can use something known as a Rest Template
