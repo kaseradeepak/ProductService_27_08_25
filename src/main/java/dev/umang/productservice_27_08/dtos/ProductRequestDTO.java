@@ -1,57 +1,18 @@
 package dev.umang.productservice_27_08.dtos;
 
+import dev.umang.productservice_27_08.models.Category;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.web.bind.annotation.GetMapping;
 
-//@Getter
-//@Setter
+@Getter
+@Setter
 public class ProductRequestDTO {
     private String title;
     private String description;
     private String image;
-    private String category;
+    private Category category;
     private double price;
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
 }
 /*
 POST /products

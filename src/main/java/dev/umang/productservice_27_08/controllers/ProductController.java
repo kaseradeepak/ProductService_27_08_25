@@ -1,14 +1,11 @@
 package dev.umang.productservice_27_08.controllers;
 
-import dev.umang.productservice_27_08.dtos.ProductNotFoundErrorDTO;
 import dev.umang.productservice_27_08.dtos.ProductRequestDTO;
 import dev.umang.productservice_27_08.exceptions.ProductNotFoundException;
 import dev.umang.productservice_27_08.models.Product;
-import dev.umang.productservice_27_08.services.FakestoreProductService;
 import dev.umang.productservice_27_08.services.ProductService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,7 +29,7 @@ public class ProductController {
      */
 
     @GetMapping("/products/{id}")
-    ResponseEntity<Product> getSingleProduct(@PathVariable("id") String id) throws ProductNotFoundException {
+    ResponseEntity<Product> getSingleProduct(@PathVariable("id") Long id) throws ProductNotFoundException {
         //call the service layer
         Product product = productService.getSingleProduct(id);
 

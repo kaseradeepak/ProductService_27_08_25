@@ -8,6 +8,7 @@ import dev.umang.productservice_27_08.repositories.ProductRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service("selfproductservice")
 public class SelfProductService implements ProductService {
@@ -21,43 +22,78 @@ public class SelfProductService implements ProductService {
     }
 
     @Override
-    public Product getSingleProduct(String id) throws ProductNotFoundException {
-        return null;
+    public Product getSingleProduct(Long id) throws ProductNotFoundException {
+        Optional<Product> optionalProduct = productRepository.findById(id);
+
+        if (optionalProduct.isEmpty()){
+            throw new ProductNotFoundException("Product with id " + id + " not found");
+        }
+
+        return optionalProduct.get();
     }
 
     @Override
     public Product createProduct(String title,
                                  String description,
                                  double price,
-                                 String categoryName,
+                                 Category category,
                                  String image) {
         Product p = new Product();
         p.setTitle(title);
         p.setDescription(description);
         p.setPrice(price);
         p.setImage(image);
-        /*
-        1. This categoryName already exists in the db
-        Fetch the category from the db
-        2. This categoryName does not exist in the db
-        Create a new category with this name in the db
-         */
-        Category category = categoryRepository.findByName(categoryName);
-        if(category == null) {
-            //category does not exist
-            Category newCategory = new Category();
-            newCategory.setName(categoryName);
-            Category savedCategory = categoryRepository.save(newCategory);
-            p.setCategory(savedCategory);
-        }else{
-            //category exists
-            p.setCategory(category);
+
+        //first we should save the category
+        if (category.getId() != null) {
+            Optional<Category> categoryOptional = categoryRepository.findById(category.getId());
+
+            if (categoryOptional.isEmpty()) {
+                //throw InvalidCategoryException or create the category.
+            }
+
+            p.setCategory(categoryOptional.get());
+        } else {
+            Optional<Category> categoryOptional = categoryRepository.findByName(category.getName());
+
+            if (categoryOptional.isPresent()) {
+                p.setCategory(categoryOptional.get());
+            } else {
+                Category c = new Category();
+                c.setName(category.getName());
+                c = categoryRepository.save(c);
+
+                p.setCategory(c);
+            }
         }
+
         return productRepository.save(p);
+
+//        /*
+//        1. This categoryName already exists in the db
+//        Fetch the category from the db
+//        2. This categoryName does not exist in the db
+//        Create a new category with this name in the db
+//         */
+//        Category category = categoryRepository.findByName(categoryName);
+//        if(category == null) {
+//            //category does not exist
+//            Category newCategory = new Category();
+//            newCategory.setName(categoryName);
+//            Category savedCategory = categoryRepository.save(newCategory);
+//            p.setCategory(savedCategory);
+//        }else{
+//            //category exists
+//            p.setCategory(category);
+//        }
+//        return productRepository.save(p);
     }
 
     @Override
     public List<Product> getAllProducts() {
-        return null;
+        return productRepository.findAll();
     }
 }
+
+
+// Git fork

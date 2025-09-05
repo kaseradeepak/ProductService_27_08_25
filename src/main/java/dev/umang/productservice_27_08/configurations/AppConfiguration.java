@@ -5,11 +5,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Configuration
-public class RestTemplateConfiguration {
+public class AppConfiguration {
     @Bean //Spring beans are spring objects which are to be managed by the spring container
     public RestTemplate createRestTemplate(){
 
