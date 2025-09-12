@@ -5,8 +5,6 @@ import dev.umang.productservice_27_08.exceptions.ProductNotFoundException;
 import dev.umang.productservice_27_08.models.Product;
 import dev.umang.productservice_27_08.services.ProductService;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,18 +29,20 @@ public class ProductController {
     @GetMapping("/products/{id}")
     Product getSingleProduct(@PathVariable("id") Long id) throws ProductNotFoundException {
         //call the service layer
-        Product product = productService.getSingleProduct(id);
+        Product product = productService.getSingleProduct(id); // @17632
+        product.setTitle("iphone 17 pro max");
+        product.setDescription("iphone 17 pro max");
 
         if(product == null){
             throw new ProductNotFoundException("Product with id " + id + " not found");
         }
 
-        return new Product();
+        return product;
     }
 
     @GetMapping("/products")
     List<Product> getAllProducts(){
-        return productService.getAllProducts();
+        return productService.getAllProducts(); // @17787
     }
 
     @PostMapping("/products")
