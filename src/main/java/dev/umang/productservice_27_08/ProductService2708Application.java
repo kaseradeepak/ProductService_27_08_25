@@ -1,9 +1,5 @@
 package dev.umang.productservice_27_08;
 
-import dev.umang.productservice_27_08.controllers.ProductController;
-import dev.umang.productservice_27_08.models.Product;
-import dev.umang.productservice_27_08.services.FakestoreProductService;
-import dev.umang.productservice_27_08.services.ProductService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

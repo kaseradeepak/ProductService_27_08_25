@@ -29,15 +29,15 @@ public class ProductController {
      */
 
     @GetMapping("/products/{id}")
-    ResponseEntity<Product> getSingleProduct(@PathVariable("id") Long id) throws ProductNotFoundException {
+    Product getSingleProduct(@PathVariable("id") Long id) throws ProductNotFoundException {
         //call the service layer
         Product product = productService.getSingleProduct(id);
 
         if(product == null){
-            return new ResponseEntity<>(product, HttpStatus.NOT_FOUND);
-        }else {
-            return new ResponseEntity<>(product, HttpStatus.OK);
+            throw new ProductNotFoundException("Product with id " + id + " not found");
         }
+
+        return new Product();
     }
 
     @GetMapping("/products")
