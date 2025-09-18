@@ -15,4 +15,6 @@ public interface ProductService {
                           String image);
 
     List<Product> getAllProducts();
+
+    void deleteProduct(Long id);
 }

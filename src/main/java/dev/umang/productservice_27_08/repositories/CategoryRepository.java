@@ -14,4 +14,7 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
     be done by JPA on your behalf
     select * from category where name = 'xyz'
      */
+
+    @Override
+    void deleteById(Long id);
 }

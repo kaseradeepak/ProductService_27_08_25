@@ -1,8 +1,11 @@
 package dev.umang.productservice_27_08.models;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
-import lombok.*;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import lombok.Getter;
+import lombok.Setter;
 
 @Getter
 @Setter
@@ -11,7 +14,7 @@ public class Product extends BaseModel{
     private String title;
     private String description;
     private double price;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Category category;
     private String image;
 }

@@ -65,4 +65,9 @@ public class ProductController {
         3. We can have a local exception handler using @ExceptionHandler
      */
 
+
+    @DeleteMapping("/products/{id}")
+    public void deleteProduct(@PathVariable("id") Long id) throws ProductNotFoundException {
+
+    }
 }

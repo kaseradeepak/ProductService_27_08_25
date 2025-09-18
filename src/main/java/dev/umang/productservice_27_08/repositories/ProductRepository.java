@@ -39,4 +39,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
 //    @Query("select * from products p join categories c on p.category_id = c.id where c.name = "mobile" " )
 //    List<Product> customQuery();
+
+    @Override
+    void deleteById(Long id);
 }
