@@ -9,7 +9,6 @@ import org.springframework.web.client.RestTemplate;
 public class AppConfiguration {
     @Bean //Spring beans are spring objects which are to be managed by the spring container
     public RestTemplate createRestTemplate(){
-
         return new RestTemplate();
     }
 }

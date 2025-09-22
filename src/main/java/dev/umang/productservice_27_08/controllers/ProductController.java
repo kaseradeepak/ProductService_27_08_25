@@ -1,10 +1,13 @@
 package dev.umang.productservice_27_08.controllers;
 
+import dev.umang.productservice_27_08.commons.AuthCommon;
 import dev.umang.productservice_27_08.dtos.ProductRequestDTO;
 import dev.umang.productservice_27_08.exceptions.ProductNotFoundException;
 import dev.umang.productservice_27_08.models.Product;
 import dev.umang.productservice_27_08.services.ProductService;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,9 +15,12 @@ import java.util.List;
 @RestController()
 public class ProductController {
     private ProductService productService;
+    private AuthCommon authCommon;
 
-    public ProductController(@Qualifier("selfproductservice") ProductService productService){
+    public ProductController(@Qualifier("selfproductservice") ProductService productService,
+                             AuthCommon authCommon) {
         this.productService = productService;
+        this.authCommon = authCommon;
     }
     //this is the class which is the entry point of requests
 
@@ -26,18 +32,23 @@ public class ProductController {
     delete product
      */
 
-    @GetMapping("/products/{id}")
-    Product getSingleProduct(@PathVariable("id") Long id) throws ProductNotFoundException {
+    @GetMapping("/products/{id}/{tokenValue}")
+    ResponseEntity<Product> getSingleProduct(@PathVariable("id") Long id,@PathVariable("tokenValue") String tokenValue) throws ProductNotFoundException {
+        if (!authCommon.validateToken(tokenValue)) {
+            //Invalid Token.
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
         //call the service layer
         Product product = productService.getSingleProduct(id); // @17632
-        product.setTitle("iphone 17 pro max");
-        product.setDescription("iphone 17 pro max");
+//        product.setTitle("iphone 17 pro max");
+//        product.setDescription("iphone 17 pro max");
 
         if(product == null){
             throw new ProductNotFoundException("Product with id " + id + " not found");
         }
 
-        return product;
+        return new ResponseEntity<>(product, HttpStatus.OK);
     }
 
     @GetMapping("/products")
