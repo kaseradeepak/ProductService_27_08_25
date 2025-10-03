@@ -2,6 +2,8 @@ package dev.umang.productservice_27_08.repositories;
 
 import dev.umang.productservice_27_08.models.Category;
 import dev.umang.productservice_27_08.models.Product;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -21,8 +23,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @Override
     List<Product> findAllById(Iterable<Long> longs);
 
-    //select * from products where title like '%iphone%'
-    List<Product> findByTitleContainsIgnoreCase(String title);
+    //select * from products where lower(title) like '%iphone%'
+    Page<Product> findByTitleContainsIgnoreCase(String title, Pageable pageable);
 
     //select * from products where title like '%iphone%' LIMIT 10
     //List<Product> findByTitleContainsIgnoreCaseTop10(String title);

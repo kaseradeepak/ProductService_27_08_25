@@ -6,6 +6,9 @@ import dev.umang.productservice_27_08.models.Product;
 import dev.umang.productservice_27_08.repositories.CategoryRepository;
 import dev.umang.productservice_27_08.repositories.ProductRepository;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -99,6 +102,26 @@ public class SelfProductService implements ProductService {
     @Override
     public void deleteProduct(Long id) {
         productRepository.deleteById(id);
+    }
+
+    @Override
+    public Page<Product> getProductsByTitle(String title, int pageNumber, int pageSize) {
+
+        /*
+        Page Size = 10
+        Page Number = 7
+
+        Limit = 10
+        Offset = 61 (10 * 6 + 1)
+         */
+
+        Sort sort = Sort.by(Sort.Direction.ASC, "price")
+                .and(Sort.by(Sort.Direction.ASC, "title"))
+                .and(Sort.by(Sort.Direction.ASC, "id"));
+
+        PageRequest pageRequest = PageRequest.of(pageNumber, pageSize, sort);
+
+        return productRepository.findByTitleContainsIgnoreCase(title,  pageRequest);
     }
 }
 

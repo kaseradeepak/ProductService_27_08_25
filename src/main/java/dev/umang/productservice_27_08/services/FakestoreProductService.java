@@ -5,6 +5,7 @@ import dev.umang.productservice_27_08.exceptions.ProductNotFoundException;
 import dev.umang.productservice_27_08.models.Category;
 import dev.umang.productservice_27_08.models.Product;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.resource.ResourceUrlProvider;
@@ -83,4 +84,10 @@ public class FakestoreProductService implements ProductService {
     public void deleteProduct(Long id) {
         return;
     }
+
+    @Override
+    public Page<Product> getProductsByTitle(String title, int pageNumber, int pageSize) {
+        return null;
+    }
+
 }
