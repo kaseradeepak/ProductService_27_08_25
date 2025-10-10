@@ -4,31 +4,42 @@ import dev.umang.productservice_27_08.dtos.FakeStoreProductDTO;
 import dev.umang.productservice_27_08.exceptions.ProductNotFoundException;
 import dev.umang.productservice_27_08.models.Category;
 import dev.umang.productservice_27_08.models.Product;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.data.domain.Page;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.servlet.resource.ResourceUrlProvider;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service("fakestoreprodservice")
+@Primary
 public class FakestoreProductService implements ProductService {
-    private final ResourceUrlProvider resourceUrlProvider;
     /*
     To call external APIs, we can use something known as a Rest Template
      */
-
     private RestTemplate restTemplate ;
+    private RedisTemplate<String, Object> redisTemplate;
 
-    public FakestoreProductService(RestTemplate restTemplate, ResourceUrlProvider resourceUrlProvider){
+    public FakestoreProductService(RestTemplate restTemplate,
+                                   RedisTemplate<String, Object> redisTemplate) {
         this.restTemplate = restTemplate;
-        this.resourceUrlProvider = resourceUrlProvider;
+        this.redisTemplate = redisTemplate;
     }
 
     @Override
     public Product getSingleProduct(Long id) throws ProductNotFoundException {
+        //First check if the product exist in the redis with the given id.
+        Product product = (Product) redisTemplate.opsForHash().get("PRODUCTS", "PRODUCT_" + id);
+
+        if (product != null) {
+            return product;
+        }
+
+        //We will inject the object instead of creating manually.
+        // RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
+
         FakeStoreProductDTO response = restTemplate.getForObject(
                 "https://fakestoreapi.com/products/" + id,
                 FakeStoreProductDTO.class);
@@ -40,7 +51,12 @@ public class FakestoreProductService implements ProductService {
             throw new ProductNotFoundException("Product with id " + id + " not found");
         }
 
-        return response.toProduct();
+        product = response.toProduct();
+
+        //Before returning this product, store in the Redis.
+        redisTemplate.opsForHash().put("PRODUCTS", "PRODUCT_" + id, product);
+
+        return product;
     }
 
     @Override

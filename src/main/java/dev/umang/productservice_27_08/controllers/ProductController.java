@@ -18,7 +18,7 @@ public class ProductController {
     private ProductService productService;
     private AuthCommon authCommon;
 
-    public ProductController(@Qualifier("selfproductservice") ProductService productService,
+    public ProductController(@Qualifier("fakestoreprodservice") ProductService productService,
                              AuthCommon authCommon) {
         this.productService = productService;
         this.authCommon = authCommon;
@@ -33,12 +33,12 @@ public class ProductController {
     delete product
      */
 
-    @GetMapping("/products/{id}/{tokenValue}")
-    ResponseEntity<Product> getSingleProduct(@PathVariable("id") Long id,@PathVariable("tokenValue") String tokenValue) throws ProductNotFoundException {
-        if (!authCommon.validateToken(tokenValue)) {
-            //Invalid Token.
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
+    @GetMapping("/products/{id}")
+    ResponseEntity<Product> getSingleProduct(@PathVariable("id") Long id) throws ProductNotFoundException {
+//        if (!authCommon.validateToken(tokenValue)) {
+//            //Invalid Token.
+//            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+//        }
 
         //call the service layer
         Product product = productService.getSingleProduct(id); // @17632
