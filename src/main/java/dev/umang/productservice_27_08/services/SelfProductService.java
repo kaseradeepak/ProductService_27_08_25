@@ -1,5 +1,6 @@
 package dev.umang.productservice_27_08.services;
 
+import dev.umang.productservice_27_08.dtos.UserDto;
 import dev.umang.productservice_27_08.exceptions.ProductNotFoundException;
 import dev.umang.productservice_27_08.models.Category;
 import dev.umang.productservice_27_08.models.Product;
@@ -9,7 +10,9 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,22 +22,35 @@ import java.util.Optional;
 public class SelfProductService implements ProductService {
     private ProductRepository productRepository;
     private CategoryRepository categoryRepository;
+    private RestTemplate restTemplate;
 
     public SelfProductService(ProductRepository productRepository,
-                              CategoryRepository categoryRepository){
+                              CategoryRepository categoryRepository,
+                              RestTemplate restTemplate) {
         this.productRepository = productRepository;
         this.categoryRepository = categoryRepository;
+        this.restTemplate = restTemplate;
     }
 
     @Override
     public Product getSingleProduct(Long id) throws ProductNotFoundException {
-        Optional<Product> optionalProduct = productRepository.findById(id);
 
-        if (optionalProduct.isEmpty()){
-            throw new ProductNotFoundException("Product with id " + id + " not found");
-        }
+        System.out.println("Calling getSingleProduct API.");
 
-        return optionalProduct.get();
+        return null;
+
+//        ResponseEntity<UserDto> response = restTemplate.getForEntity(
+//                "http://USERSERVICESEPT25MORNING/users/validate/" + "abc",
+//                UserDto.class
+//        );
+//
+//        Optional<Product> optionalProduct = productRepository.findById(id);
+//
+//        if (optionalProduct.isEmpty()){
+//            throw new ProductNotFoundException("Product with id " + id + " not found");
+//        }
+//
+//        return optionalProduct.get();
     }
 
     @Override

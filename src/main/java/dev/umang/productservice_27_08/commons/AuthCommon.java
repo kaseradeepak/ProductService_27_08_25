@@ -15,7 +15,7 @@ public class AuthCommon { // Util / Common / Helper
 
     public boolean validateToken(String tokenValue) {
         ResponseEntity<UserDto> response = restTemplate.getForEntity(
-                "http://localhost:8080/users/validate/" + tokenValue,
+                "http://localhost:7070/users/validate/" + tokenValue,
                 UserDto.class
         );
 
