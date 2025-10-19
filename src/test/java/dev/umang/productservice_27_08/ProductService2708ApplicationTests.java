@@ -19,25 +19,25 @@ class ProductService2708ApplicationTests {
     @Autowired
     private CategoryRepository categoryRepository;
 
-    @Test
-    void contextLoads() {
-    }
+//    @Test
+//    void contextLoads() {
+//    }
 
-    @Test
-    public void testFetchTypes() {
-//        Optional<Product> optionalProduct = productRepository.findById(1L);
-
-        Optional<Category> categoryOptional = categoryRepository.findById(1L);
-
-        //Category category = categoryOptional.get();
-
-//        List<Product> products = category.getProducts();
+//    @Test
+//    public void testFetchTypes() {
+////        Optional<Product> optionalProduct = productRepository.findById(1L);
 //
-//        for (Product product : products) {
-//            System.out.println(product.getTitle());
-//        }
-
-        System.out.println("DEBUG");
-    }
+//        Optional<Category> categoryOptional = categoryRepository.findById(1L);
+//
+//        //Category category = categoryOptional.get();
+//
+////        List<Product> products = category.getProducts();
+////
+////        for (Product product : products) {
+////            System.out.println(product.getTitle());
+////        }
+//
+//        System.out.println("DEBUG");
+//    }
 
 }
